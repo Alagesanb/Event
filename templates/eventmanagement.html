@@ -1,0 +1,16 @@
+<html>
+<head>
+<title></title>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/static/src/js/eventmanagement.js"></script>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+{%csrf_token%}
+Attachment<input type="file" name="attachment" id="attachment_id"/>
+<input type="submit" name="submit" value="Submit" id="btnsubmit"/>
+<input type="button" name="cancel" value="Clear" id="btncancel"/>
+<input type="button" name="view" value="View" id="btnview"/>
+</form>
+</body>
+</html>
