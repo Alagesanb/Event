@@ -44,6 +44,18 @@ function eventmanagement_cancel_function()
     
 }
 
+function eventmanagement_table_function(){
+	$.ajax({
+		type:"GET",
+		url:'/eventmanagement_table_view/',
+		async:false,
+	}).done(function(json_data){
+		data=JSON.parse(json_data)
+		eventmanagement_table(data)
+	})
+
+}
+
 $(document).ready( function() {
 $("#eventmanagement_table").DataTable();
     //Save the form
@@ -51,10 +63,17 @@ $("#eventmanagement_table").DataTable();
         eventmanagement_create_function();
     });
     
+    $("#btnupdate").click(function(){
+        alert("Updated Successfully");
+    });
+    
+    $("#btndelete").click(function(){
+        alert("Deleted Successfully");
+    });
     //Cancel the form
     $("#btncancel").click(function(){
         eventmanagement_cancel_function();
-        alert("Cancelled Successfully.");
+        alert("Cancelled Successfully");
     });
         //Image upload displaying the frame
     	$(document).on('change', '.btn-file :file', function() {

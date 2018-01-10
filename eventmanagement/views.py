@@ -5,6 +5,7 @@ from django.http.response import HttpResponse
 from eventmanagement.models import EventManagement
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime 
+from django.db import connection
 import datetime as dt
 import dateutil.parser as dparser
 from dateutil.parser import parse
@@ -36,3 +37,9 @@ def create_eventmanagement(request):
     EventManagement.objects.create(name=title,description=description,location=location,startdate=date1,enddate=date2,images=imgInp,category=category,published=published_res)
     return HttpResponse(json.dumps({'success':1}), content_type="application/json")
     
+def eventmanagement_table_view(request):# function for displaying eventmanagement table
+    cr=connection.cursor()
+    cr.execute("select * from event_management_details order by id")
+    cr.close()
+    result["event_json"] = dictfetchall(cr)
+    return HttpResponse(json.dumps(result))
