@@ -1,8 +1,6 @@
-$(document).ready( function() {
-$("#eventmanagement_table").DataTable();
-    //Save the form
-    $("#btnsubmit").click(function(){
-        var title = $('#title').val();
+
+function eventmanagement_create_function(){
+    var title = $('#title').val();
         var description = $('#description').val();
         var location = $('#location').val();
         var datetimepicker1 = $('#datetimepicker1').val();
@@ -29,11 +27,33 @@ $("#eventmanagement_table").DataTable();
         }).done(function(json_data)
         {
         alert("Saved Successfully.")
+        eventmanagement_cancel_function();
         });
+}
+
+function eventmanagement_cancel_function()
+{
+    $('#title').val('');
+    $('#description').val('');
+    $('#location').val('');
+    $('#datetimepicker1').val('');
+    $('#datetimepicker2').val('');
+    $('#imgInp').val('');
+    $('#category').val('');
+    $('#published').val('');
+    
+}
+
+$(document).ready( function() {
+$("#eventmanagement_table").DataTable();
+    //Save the form
+    $("#btnsubmit").click(function(){
+        eventmanagement_create_function();
     });
     
     //Cancel the form
     $("#btncancel").click(function(){
+        eventmanagement_cancel_function();
         alert("Cancelled Successfully.");
     });
         //Image upload displaying the frame
