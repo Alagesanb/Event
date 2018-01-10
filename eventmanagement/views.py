@@ -5,6 +5,9 @@ from django.http.response import HttpResponse
 from eventmanagement.models import EventManagement
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime 
+import datetime as dt
+import dateutil.parser as dparser
+from dateutil.parser import parse
 import json
 
 # Create your views here.
@@ -23,10 +26,13 @@ def create_eventmanagement(request):
     description = request.POST.get('description',False)
     location = request.POST.get('location',False)
     datetimepicker1 = request.POST.get('datetimepicker1',False)
+    date1=dparser.parse(datetimepicker1)
     datetimepicker2 = request.POST.get('datetimepicker2',False)
+    date2=dparser.parse(datetimepicker2)
     imgInp = request.POST.get('imgInp',False)
     category = request.POST.get('category',False)
     published = request.POST.get('published',False)
-    EventManagement.objects.create(name=title,description=description,location=location,startdate=datetimepicker1,enddate=datetimepicker2,images=imgInp,category=category,published=published)
+    published_res = published.isupper()
+    EventManagement.objects.create(name=title,description=description,location=location,startdate=date1,enddate=date2,images=imgInp,category=category,published=published_res)
     return HttpResponse(json.dumps({'success':1}), content_type="application/json")
     
