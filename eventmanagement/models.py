@@ -21,3 +21,9 @@ class EventManagement(models.Model):
     published = models.BooleanField()
     class Meta:
         db_table = 'event_management_details'
+        
+class LoginPage(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=128)
+    class Meta:
+        db_table = 'login_page'

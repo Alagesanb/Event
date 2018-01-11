@@ -1,9 +1,13 @@
 from __future__ import unicode_literals
 from django.shortcuts import render
+from django.shortcuts import render_to_response,redirect
 from django.views.generic.base import View
 from django.http.response import HttpResponse
 from eventmanagement.models import EventManagement
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate,login,logout
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from datetime import datetime 
 from django.db import connection
 import datetime as dt
@@ -12,6 +16,23 @@ from dateutil.parser import parse
 import json
 
 # Create your views here.
+@csrf_exempt
+def login_page(request):
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('uname',False)
+        password = request.POST.get('psw',False)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/')
+    return render(request,'eventmanagement.html')
+
+def LogoutRequest(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
 def eventmanagement(request):
     return render(request,'eventmanagement.html')
     
@@ -43,3 +64,5 @@ def eventmanagement_table_view(request):# function for displaying eventmanagemen
     cr.close()
     result["event_json"] = dictfetchall(cr)
     return HttpResponse(json.dumps(result))
+    
+
